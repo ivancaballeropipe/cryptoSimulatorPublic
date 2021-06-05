@@ -1,0 +1,112 @@
+<!-- Modal Compra -->
+<ng-template #compra let-c="close" let-d="dismiss">
+    <div class="modal-header" style="background-color: #12161C;border-color:#12161C">
+        <h4 class="modal-title letraCabecera" id="tituloCompra" ></h4>
+        <button type="button" class="close" style="background-color: rgb(248, 209, 47);" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-form-label">Tokens Totales:</label>
+            <input type="text" autocomplete="off" class="form-control" id="tokensDisponible" disabled>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Total Invertido:</label>
+            <input type="text" autocomplete="off" class="form-control" id="capitalDisponible" disabled>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Saldo Actual:</label>
+            <input type="text" autocomplete="off" class="form-control" id="saldoDisponible" disabled>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Precio Actual:</label>
+            <input type="text" autocomplete="off" class="form-control" id="precioActual" disabled>
+        </div>
+        <ul ngbNav #nav="ngbNav"  class="nav-tabs" style="margin-top: 20px;">
+            <li ngbNavItem  style="width: 50%;">
+                <a ngbNavLink >Euros</a>
+                <ng-template ngbNavContent>
+                    <input type="number" id="inputEuros" class="form-control" >
+                </ng-template>
+            </li>
+            <li ngbNavItem style="width: 50%;">
+                <a ngbNavLink id="pestaniaToken" ></a>
+                <ng-template ngbNavContent>
+                    <input type="number" id="inputTokens" class="form-control" >
+                </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav"></div>
+    </div>
+    <div class="modal-footer" style="background-color: #12161C;">
+        <button type="button" class="btn" style="background-color: rgb(248, 209, 47);" (click)="venderMoneda()" >Vender</button>
+        <button type="button" class="btn" style="background-color: rgb(248, 209, 47);" (click)="comprarMoneda()" >Comprar</button>
+    </div>
+</ng-template>
+
+
+<div class="row" style="margin-top:20px">
+    <div class="col-1" style="text-align:center; font-size:25px">
+        <button class="btn btn-sm" style="margin-top: 5%;background-color: rgb(248, 209, 47);" (click)="cambiarDias('1')" type="button">1 Día</button>
+    </div>
+    <div class="col-1" style="text-align:center; font-size:25px;">
+        <button class="btn btn-sm" style="margin-top: 5%;background-color: rgb(248, 209, 47);" (click)="cambiarDias('7')" type="button">7 Días</button>
+    </div>
+    <div class="col-1" style="text-align:center; font-size:25px">
+        <button class="btn btn-sm" style="margin-top: 5%;background-color: rgb(248, 209, 47);" (click)="cambiarDias('30')" type="button">30 Días</button>
+    </div>
+
+    <div class="col-1" style="text-align:center; font-size:25px">
+        <div *ngIf="registrado">
+            <button class="btn btn-sm" style="margin-top: 5%;background-color: rgb(248, 209, 47);" (click)="abrirModalCompra(compra)" type="button">Gestión</button>
+        </div>
+    </div> 
+    <div class="col-2" style="text-align:center; font-size:30px">
+        <b id="nombreMoneda" class="orbitron"></b>
+    </div>
+</div>
+
+<div class="row" style="margin-top:30px">
+    <div class="col-9">
+        <div class="container "> 
+            <div class="ct-chart ct-perfect-fourth -chart"  id="chartMoneda"></div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="row" style="">
+            <div class="col-12">
+                <b style="font-size:30px;">Precio:</b><BR>
+                <b id='titulo_moneda' style="font-size:25px;"></b>
+            </div>
+        </div>
+            <div class="row carteraIndividual" style="margin-top:20px">
+                <div class="col-12">
+                    <b style="font-size:30px;">Capital Actual:</b><BR>
+                    <b id='capitalTotal' style="font-size:25px;"></b>
+                </div>
+            </div>
+            <div class="row carteraIndividual" style="margin-top:20px">
+                <div class="col-12">
+                    <b style="font-size:30px;">Tokens:</b><BR>
+                    <b id='tokenTotales' style="font-size:25px;"></b>
+                </div>
+            </div>
+    </div>
+</div>
+
+<style>
+    .fill {
+        min-height: 100%;
+        height: 100%;
+        background-color: green;
+        display:flex;
+        flex-flow:column;
+    }
+
+    .my-chart {
+        flex:1 1 0;
+        height:auto;
+        background-color:yellow;
+    }
+</style>
